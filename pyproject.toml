@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "sin-codocs"
-version = "1.0.0"
+version = "1.0.1"
 description = "SIN CoDocs — Co-located docs standard + sprint executor (merged from sin-codocs and sin-codocs-sprint)"
 readme = "README.md"
 license = {text = "MIT"}

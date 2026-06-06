@@ -187,6 +187,25 @@ be rewritten in v1.0.1 (see CHANGELOG.md).
 - `git-immortal-commit` — pair with `sin-codocs sprint --commit` to
   make every sprint a permanent commit.
 
+## Language-specific CoDocs conventions
+
+**IMPORTANT:** The `# Purpose:` / `# Docs:` header syntax is **Python-only**.
+For Go files, use `// Purpose:` and `// Docs:` (double-slash comments).
+
+| Language | File header | Docstring style | Section separators |
+|----------|-------------|-----------------|-------------------|
+| Python   | `"""Purpose: ...\n\nDocs: ...\n"""` | `"""` triple-quote | `# ── Section ────` |
+| Go       | `// Purpose: ...\n// Docs: ...` | `//` single-line | `// ── Section ────` |
+| TypeScript/JS | `/** Purpose: ...` | `/** */` JSDoc | `// ── Section ────` |
+| Rust     | `//! Purpose: ...` | `//!` outer doc | `// ── Section ────` |
+
+**When creating new modules** via `sin-codocs new-module`:
+- Python → uses `templates/module.py.template`
+- Go → uses `templates/module.go.template`
+- The validator (`sin-codocs check-inline`) knows both patterns and checks accordingly
+
+**Common mistake:** Copying a Python `"""Purpose:"""` header into a `.go` file — this is a syntax error in Go. Always use the Go template for Go files.
+
 ## Testing
 
 ```bash
