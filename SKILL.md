@@ -3,6 +3,22 @@
 """
 SIN CoDocs — Co-located docs standard + sprint executor (merged skill).
 
+> ## ⚠️ MIGRATION — `sin-codocs-sprint` is DEPRECATED as of v1.0.0
+>
+> The previously separate `sin-codocs` and `sin-codocs-sprint` skills
+> are now **one unified skill**: `sin-codocs`. The old
+> `sin-codocs-sprint` repository is archived.
+>
+> **If your `opencode.json` still lists `sin-codocs-sprint` in
+> `skills.baseline`:** remove it and add `sin-codocs` instead.
+> See the [Migration](#migration-from-pre-v100) section below.
+>
+> **If you have a stale local checkout** at
+> `~/.config/opencode/skills/sin-codocs-sprint/`, delete it — the
+> canonical source is now
+> [`OpenSIN-Code/SIN-Code-Codocs-Skill`](https://github.com/OpenSIN-Code/SIN-Code-Codocs-Skill)
+> (the same repo that hosts `sin-codocs`).
+
 ## What this is
 
 Two-layer tool for the OpenSIN-Code ecosystem:
@@ -100,6 +116,66 @@ The two were merged in v1.0.0 to:
 
 The merge is structural, not functional — every previous command still
 works, just under the unified `sin-codocs` binary.
+
+## Migration from pre-v1.0.0
+
+If you were using `sin-codocs` + `sin-codocs-sprint` as two separate
+skills (v0.5.x or earlier), follow these steps to migrate:
+
+### 1. Update `opencode.json` baseline
+
+```diff
+  "skills": {
+    "baseline": [
+-     "sin-codocs-sprint",
+      "sin-codocs",
+      ...
+    ]
+  }
+```
+
+### 2. Remove the old local checkout
+
+```bash
+rm -rf ~/.config/opencode/skills/sin-codocs-sprint
+```
+
+### 3. Re-clone the canonical source (only if your local sin-codocs
+   is also stale)
+
+```bash
+rm -rf ~/.config/opencode/skills/sin-codocs
+git clone https://github.com/OpenSIN-Code/SIN-Code-Codocs-Skill.git \
+    ~/.config/opencode/skills/sin-codocs
+```
+
+### 4. Rewrite old commands
+
+| Old (v0.5) | New (v1.0.0) |
+|------------|--------------|
+| `sin codocs check .` | `sin-codocs check .` |
+| `bash sprint.sh . --auto` | `sin-codocs sprint . --auto` |
+| `bash scan.sh .` | `sin-codocs scan .` |
+| `bash generate.sh file.py` | `sin-codocs generate file.py` |
+| `bash status.sh .` | `sin-codocs status .` |
+| `bash diff.sh .` | `sin-codocs diff .` |
+| `bash install-skill.sh` | `sin-codocs install-skill` |
+| `bash new-doc-md.sh file.py` | `sin-codocs new-doc-md file.py` |
+| `bash new-module.sh file.py` | `sin-codocs new-module file.py` |
+| `bash init.sh .` | `sin-codocs init .` |
+| `bash coverage.sh .` | `sin-codocs coverage .` |
+
+### 5. Verify
+
+```bash
+sin-codocs --help              # should list 13 subcommands
+sin-codocs check .             # should report no new issues introduced by the migration
+pytest ~/.config/opencode/skills/sin-codocs/tests/ -v
+```
+
+Expected: 65/88 tests pass. The 23 failing tests are documented
+migration debt — they reference the pre-merge `lib/` paths and will
+be rewritten in v1.0.1 (see CHANGELOG.md).
 
 ## Related tools
 
