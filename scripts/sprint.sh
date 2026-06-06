@@ -3,9 +3,9 @@
 # Docs: ../SKILL.md
 #
 # The 4-step sprint pipeline:
-#   1. SCAN      — find every CoDocs gap (lib/scanner.py)
-#   2. REPORT    — format the gap table (lib/reporter.py)
-#   3. GENERATE  — auto-create draft .doc.md for each gap (lib/generator.py)
+#   1. SCAN      — find every CoDocs gap (src/sin_codocs/scanner.py)
+#   2. REPORT    — format the gap table (src/sin_codocs/reporter.py)
+#   3. GENERATE  — auto-create draft .doc.md for each gap (src/sin_codocs/generator.py)
 #   4. COMMIT    — git commit, only if --commit was passed
 #
 # Usage:
@@ -63,7 +63,7 @@ REPO_PATH="$(cd "$REPO_PATH" && pwd)"
 [[ -f "$METRICS"   ]] || { echo "Metrics missing"   >&2; exit 1; }
 
 # Check upstream
-if ! python3 -c "import sys; sys.path.insert(0,'$SKILL_DIR/../sin-codocs/lib'); import metrics" 2>/dev/null; then
+if ! python3 -c "import sys; sys.path.insert(0,'$SKILL_DIR/../sin-codocs/src/sin_codocs'); import metrics" 2>/dev/null; then
   echo "WARN: sin-codocs upstream not on sys.path — will use subprocess" >&2
 fi
 
@@ -97,7 +97,7 @@ if [[ $AUTO -eq 1 || $COMMIT -eq 1 ]] && [[ $SCAN_UPDATE -eq 1 ]]; then
 fi
 
 # Print the human-friendly table
-python3 - "$SCAN_TMP" "$SKILL_DIR/lib" <<'PY'
+python3 - "$SCAN_TMP" "$SKILL_DIR/src/sin_codocs" <<'PY'
 import json, sys
 from pathlib import Path
 sys.path.insert(0, sys.argv[2])
@@ -178,7 +178,7 @@ else
     AFTER_TMP="$(mktemp -t sin-codocs-sprint-after.XXXXXX.json)"
     python3 "$METRICS" --path "$REPO_PATH" --min "$MIN" --json > "$AFTER_TMP" 2>/dev/null || true
     log "Coverage delta:"
-    python3 - "$BEFORE_TMP" "$AFTER_TMP" "$SKILL_DIR/lib" <<'PY'
+    python3 - "$BEFORE_TMP" "$AFTER_TMP" "$SKILL_DIR/src/sin_codocs" <<'PY'
 import json, sys
 from pathlib import Path
 sys.path.insert(0, sys.argv[3])

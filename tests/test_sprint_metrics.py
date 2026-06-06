@@ -16,9 +16,9 @@ import tempfile
 import unittest
 from pathlib import Path
 SKILL_DIR = Path(__file__).resolve().parent.parent
-LIB_DIR = SKILL_DIR / 'lib'
+LIB_DIR = SKILL_DIR / 'src/sin_codocs'
 UPSTREAM_LIB = Path.home() / '.config/opencode/skills/sin-codocs/src/sin_codocs/metrics.py'
-sys.path.insert(0, str(LIB_DIR))
+sys.path.insert(0, str(SKILL_DIR / 'src'))
 from sin_codocs.sprint_metrics import run_sprint_metrics, SprintReport
 
 class TestRunSprintMetrics(unittest.TestCase):
@@ -68,7 +68,7 @@ class TestRunSprintMetrics(unittest.TestCase):
 
     def test_missing_upstream_sets_error(self, monkeymethod=None):
         """A missing upstream path sets sprint_error."""
-        import sin_codocs.sprint_metrics
+        import sin_codocs.sprint_metrics as metrics
         original = metrics.SINCODOCS_METRICS
         metrics.SINCODOCS_METRICS = Path('/no/such/file.py')
         try:
@@ -94,7 +94,7 @@ class TestMetricsCLI(unittest.TestCase):
     def test_json_output_shape(self):
         """CLI JSON has all upstream + sprint fields."""
         (Path(self.tmp) / 'x.py').write_text('def x(): pass\n', encoding='utf-8')
-        proc = subprocess.run([sys.executable, str(LIB_DIR / 'metrics.py'), '--path', self.tmp, '--json'], capture_output=True, text=True, timeout=30)
+        proc = subprocess.run([sys.executable, str(LIB_DIR / 'sprint_metrics.py'), '--path', self.tmp, '--json'], capture_output=True, text=True, timeout=30)
         self.assertEqual(proc.returncode in (0, 1), True, proc.stderr)
         data = json.loads(proc.stdout)
         for key in ('source_files', 'with_doc_md', 'doc_md_pct', 'overall_pct'):
@@ -104,7 +104,7 @@ class TestMetricsCLI(unittest.TestCase):
 
     def test_min_threshold_exit_code(self):
         """--min gate produces a non-2 exit code."""
-        proc = subprocess.run([sys.executable, str(LIB_DIR / 'metrics.py'), '--path', self.tmp, '--min', '50'], capture_output=True, text=True, timeout=30)
+        proc = subprocess.run([sys.executable, str(LIB_DIR / 'sprint_metrics.py'), '--path', self.tmp, '--min', '50'], capture_output=True, text=True, timeout=30)
         self.assertNotEqual(proc.returncode, 2)
 if __name__ == '__main__':
     unittest.main()

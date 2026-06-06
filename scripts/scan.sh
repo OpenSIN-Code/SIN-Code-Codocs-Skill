@@ -63,7 +63,7 @@ trap 'rm -f "$TMP"' EXIT
 python3 "$SCANNER" --path "$REPO_PATH" --json > "$TMP"
 
 # Pass the lib path as $1 because __file__ in a heredoc is /dev/stdin
-LIB_DIR="$SKILL_DIR/lib"
+LIB_DIR="$SKILL_DIR/src/sin_codocs"
 python3 - "$TMP" "$QUIET" "$LIB_DIR" <<'PY'
 import json, sys
 from pathlib import Path

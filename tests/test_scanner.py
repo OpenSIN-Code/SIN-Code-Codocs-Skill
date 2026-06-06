@@ -21,8 +21,8 @@ import unittest
 from pathlib import Path
 SKILL_DIR = Path(__file__).resolve().parent.parent
 SCRIPTS_DIR = SKILL_DIR / 'scripts'
-LIB_DIR = SKILL_DIR / 'lib'
-sys.path.insert(0, str(LIB_DIR))
+LIB_DIR = SKILL_DIR / 'src/sin_codocs'
+sys.path.insert(0, str(SKILL_DIR / 'src'))
 from sin_codocs.scanner import scan_repo, ScanResult, Gap
 
 def _write(path: Path, content: str) -> None:

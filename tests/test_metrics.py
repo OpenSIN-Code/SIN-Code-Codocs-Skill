@@ -21,7 +21,7 @@ import unittest
 from pathlib import Path
 
 SKILL_DIR = Path(__file__).resolve().parent.parent
-LIB_DIR = SKILL_DIR / "lib"
+LIB_DIR = SKILL_DIR / "src/sin_codocs"
 EXAMPLES_DIR = SKILL_DIR / "examples"
 
 

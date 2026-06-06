@@ -61,7 +61,7 @@ PY
 fi
 
 # Human mode
-LIB_DIR="$SKILL_DIR/lib"
+LIB_DIR="$SKILL_DIR/src/sin_codocs"
 python3 - "$TMP" "$REPO_PATH" "$LIB_DIR" <<'PY'
 import json, sys
 from pathlib import Path

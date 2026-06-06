@@ -18,8 +18,8 @@ import textwrap
 import unittest
 from pathlib import Path
 SKILL_DIR = Path(__file__).resolve().parent.parent
-LIB_DIR = SKILL_DIR / 'lib'
-sys.path.insert(0, str(LIB_DIR))
+LIB_DIR = SKILL_DIR / 'src/sin_codocs'
+sys.path.insert(0, str(SKILL_DIR / 'src'))
 from sin_codocs.generator import generate_draft, write_draft, extract_facts, SourceFacts
 
 def _write(path: Path, content: str) -> None:

@@ -2,7 +2,7 @@
 # Purpose: Show current CoDocs coverage status (human-readable).
 # Docs: ../SKILL.md
 #
-# Wraps lib/metrics.py + lib/reporter.py to give a one-screen status
+# Wraps src/sin_codocs/metrics.py + src/sin_codocs/reporter.py to give a one-screen status
 # for a repo. Faster than running the full sprint.
 #
 # Usage:
@@ -18,7 +18,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SKILL_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 METRICS="$SKILL_DIR/src/sin_codocs/metrics.py"
 REPORTER="$SKILL_DIR/src/sin_codocs/reporter.py"
-LIB_DIR="$SKILL_DIR/lib"
+LIB_DIR="$SKILL_DIR/src/sin_codocs"
 
 REPO_PATH="."
 JSON=0

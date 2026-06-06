@@ -2,7 +2,7 @@
 # Purpose: Generate a draft .doc.md for a single source file.
 # Docs: ../SKILL.md
 #
-# Thin wrapper around lib/generator.py that adds the sprint-specific
+# Thin wrapper around src/sin_codocs/generator.py that adds the sprint-specific
 # safety rails:
 #   - refuses to overwrite an existing .doc.md (unless --force)
 #   - prints a one-line summary at the end
