@@ -1,0 +1,41 @@
+// Purpose: <one-line description of what this package does>
+// Docs: <this-package>.doc.md
+//
+// <optional longer description — 1-2 sentences.>
+
+package <module_name>
+
+// ── Imports ───────────────────────────────────────────────────────────
+import (
+	"context"   // request-scoped values, cancellation
+	"encoding/json"
+	"fmt"
+	"time"
+)
+
+// ── Constants ─────────────────────────────────────────────────────────
+const (
+	DefaultTimeout = 30 * time.Second  // matches upstream SLA
+	MaxRetries     = 3                  // upstream < 2 fails per 1000
+)
+
+// ── Public API ────────────────────────────────────────────────────────
+
+// PublicFunction does X and returns Y.
+//
+// Longer description if needed. Explain WHY, not WHAT — the WHAT is
+// visible from the signature, the WHY needs the docstring.
+//
+// Returns an error if ...
+func PublicFunction(arg string) (string, error) {
+	// not the obvious approach because ...
+	return arg, nil
+}
+
+// ── Internal helpers ──────────────────────────────────────────────────
+
+// internalHelper is not part of the public API. Lowercase first letter
+// is Go's convention for unexported names.
+func internalHelper(value int) int {
+	return value * 2
+}

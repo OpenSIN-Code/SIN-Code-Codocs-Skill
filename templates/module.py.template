@@ -1,0 +1,61 @@
+"""Purpose: <one-line description of what this module does>
+
+Docs: <module_path>.doc.md
+
+<optional longer description — 1-2 sentences explaining the module's
+role in the system and the most important design decision.>
+"""
+
+from __future__ import annotations
+
+# ── Imports ────────────────────────────────────────────────────────────
+# Standard library — alphabetical.
+import json
+import logging
+from typing import Any
+
+# Third-party — alphabetical, blank line before.
+# import requests
+
+
+# ── Constants ──────────────────────────────────────────────────────────
+DEFAULT_TIMEOUT = 30        # seconds; matches upstream SLA
+MAX_RETRIES = 3             # upstream guarantees < 2 failures per 1000
+LOG_LEVEL = logging.INFO    # override via $LOG_LEVEL env var
+
+
+# ── Public API ─────────────────────────────────────────────────────────
+def public_function(arg: str) -> str:
+    """Short description of what this does (one line).
+
+    Longer description if needed. Explain WHY, not WHAT — the WHAT is
+    visible from the signature, the WHY needs the docstring.
+
+    Args:
+        arg: What this argument is and what valid values it accepts.
+
+    Returns:
+        What the caller gets back.
+
+    Raises:
+        ValueError: When and why this is raised.
+    """
+    # not the obvious approach because ...
+    return arg
+
+
+# ── Internal helpers ───────────────────────────────────────────────────
+def _internal_helper(value: int) -> int:
+    """Leading underscore = not part of the public API.
+
+    Internal helpers still need docstrings — they often contain the
+    trickiest logic and the next reader will be a future you.
+    """
+    return value * 2
+
+
+# ── Module entry point ─────────────────────────────────────────────────
+if __name__ == "__main__":
+    # CLI mode — used by smoke tests and the `python -m` workflow.
+    logging.basicConfig(level=LOG_LEVEL)
+    print(json.dumps({"module": "<module_name>"}))

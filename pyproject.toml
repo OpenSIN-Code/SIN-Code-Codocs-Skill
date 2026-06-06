@@ -1,0 +1,63 @@
+# Purpose: Build configuration for merged sin-codocs package
+# Docs: pyproject.toml.doc.md
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "sin-codocs"
+version = "1.0.0"
+description = "SIN CoDocs — Co-located docs standard + sprint executor (merged from sin-codocs and sin-codocs-sprint)"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [
+    {name = "OpenSIN-Code", email = "agent@opensin.ai"},
+]
+keywords = [
+    "opencode", "skill", "documentation", "codocs",
+    "sprint", "validator", "executor", "open-source",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Software Development :: Documentation",
+]
+# CoDocs standard layer is stdlib-only by design — no runtime deps
+dependencies = [
+    "pyyaml>=6.0",]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+]
+lint = [
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+]
+all = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+]
+
+[project.scripts]
+# Single CLI with subcommands for both validator and executor
+sin-codocs = "sin_codocs.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sin_codocs"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --tb=short"
